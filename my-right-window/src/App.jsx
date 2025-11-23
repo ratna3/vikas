@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store';
 import Navbar from './components/layout/Navbar';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 // Lazy load pages for better performance
 import { Suspense, lazy } from 'react';
@@ -9,9 +10,10 @@ import { Suspense, lazy } from 'react';
 const Home = lazy(() => import('./pages/Home'));
 const BlogList = lazy(() => import('./pages/BlogList'));
 const BlogDetail = lazy(() => import('./pages/BlogDetail'));
+const About = lazy(() => import('./pages/About'));
 const AdminLogin = lazy(() => import('./pages/Admin/Login'));
 const AdminDashboard = lazy(() => import('./pages/Admin/Dashboard'));
-const AdminBlogEditor = lazy(() => import('./pages/Admin/BlogEditor'));
+const BlogEditor = lazy(() => import('./pages/Admin/BlogEditor'));
 
 // Loading component
 const LoadingScreen = () => (
@@ -32,18 +34,35 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
-      <Suspense fallback={<LoadingScreen />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blogs" element={<BlogList />} />
-          <Route path="/blog/:slug" element={<BlogDetail />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
-          <Route path="/admin/blog/edit/:id" element={<AdminBlogEditor />} />
-        </Routes>
-      </Suspense>
+      <div className="min-h-screen bg-black">
+        <Suspense fallback={<LoadingScreen />}>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<><Navbar /><Home /></>} />
+            <Route path="/blogs" element={<><Navbar /><BlogList /></>} />
+            <Route path="/blog/:slug" element={<><Navbar /><BlogDetail /></>} />
+            <Route path="/about" element={<><Navbar /><About /></>} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/editor" element={
+              <ProtectedRoute>
+                <BlogEditor />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/editor/:id" element={
+              <ProtectedRoute>
+                <BlogEditor />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Suspense>
+      </div>
     </Router>
   );
 }

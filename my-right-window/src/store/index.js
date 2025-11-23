@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { supabase } from '../services/supabase';
+import { supabase, isSupabaseConfigured } from '../services/supabase';
+import { getMockBlogs, getMockBlogBySlug } from '../data/mockBlogs';
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -71,6 +72,13 @@ export const useBlogStore = create((set, get) => ({
   fetchBlogs: async (published = true) => {
     set({ isLoading: true, error: null });
     try {
+      // Use mock data if Supabase is not configured
+      if (!isSupabaseConfigured()) {
+        const mockData = await getMockBlogs(published);
+        set({ blogs: mockData, isLoading: false });
+        return;
+      }
+
       let query = supabase
         .from('blogs')
         .select('*')
@@ -92,6 +100,13 @@ export const useBlogStore = create((set, get) => ({
   fetchBlogBySlug: async (slug) => {
     set({ isLoading: true, error: null });
     try {
+      // Use mock data if Supabase is not configured
+      if (!isSupabaseConfigured()) {
+        const mockData = await getMockBlogBySlug(slug);
+        set({ currentBlog: mockData, isLoading: false });
+        return;
+      }
+
       const { data, error } = await supabase
         .from('blogs')
         .select('*')
