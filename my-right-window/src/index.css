@@ -1,6 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Custom masculine color palette */
+  --color-dark-slate: #0f172a;
+  --color-charcoal: #1e293b;
+  --color-neon-green: #00ff41;
+  --color-neon-cyan: #00d9ff;
+  --color-neon-orange: #ff6b35;
+  --color-deep-black: #000000;
+  --color-dark-gray: #111827;
+  
+  /* Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-slideUp: slideUp 0.5s ease-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
 
 @layer base {
   body {
@@ -18,14 +47,14 @@
 @layer components {
   .btn-primary {
     @apply bg-neon-green text-deep-black px-6 py-3 rounded-lg font-semibold 
-           hover:bg-opacity-90 transition-all duration-300 
-           focus:outline-none focus:ring-2 focus:ring-neon-green focus:ring-offset-2 focus:ring-offset-deep-black;
+           hover:opacity-90 transition-all duration-300 
+           focus:outline-none focus:ring-2 focus:ring-neon-green;
   }
   
   .btn-secondary {
     @apply bg-transparent border-2 border-neon-cyan text-neon-cyan px-6 py-3 rounded-lg font-semibold 
            hover:bg-neon-cyan hover:text-deep-black transition-all duration-300
-           focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-deep-black;
+           focus:outline-none focus:ring-2 focus:ring-neon-cyan;
   }
   
   .card {
