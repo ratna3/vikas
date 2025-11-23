@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useAuthStore } from './store';
+import Navbar from './components/layout/Navbar';
 
 // Lazy load pages for better performance
 import { Suspense, lazy } from 'react';
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <Router>
+      <Navbar />
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,4 +49,5 @@ function App() {
 }
 
 export default App;
+
 
