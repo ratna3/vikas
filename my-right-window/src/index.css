@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-deep-black text-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+  }
+  
+  * {
+    @apply scroll-smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-neon-green text-deep-black px-6 py-3 rounded-lg font-semibold 
+           hover:bg-opacity-90 transition-all duration-300 
+           focus:outline-none focus:ring-2 focus:ring-neon-green focus:ring-offset-2 focus:ring-offset-deep-black;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border-2 border-neon-cyan text-neon-cyan px-6 py-3 rounded-lg font-semibold 
+           hover:bg-neon-cyan hover:text-deep-black transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-deep-black;
+  }
+  
+  .card {
+    @apply bg-charcoal border border-gray-700 rounded-lg p-6 shadow-lg
+           hover:border-neon-cyan transition-all duration-300;
+  }
+  
+  .input-field {
+    @apply bg-dark-slate border border-gray-600 text-white px-4 py-2 rounded-lg
+           focus:outline-none focus:ring-2 focus:ring-neon-green focus:border-transparent
+           placeholder:text-gray-400;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  
+  .box-glow {
+    box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
