@@ -4,20 +4,25 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    // Ensure single React instance to prevent useLayoutEffect errors
+    dedupe: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // React ecosystem
+          // React and React-Three must be in the same chunk to prevent hook errors
           if (id.includes('node_modules/react') || 
               id.includes('node_modules/react-dom') || 
-              id.includes('node_modules/react-router')) {
+              id.includes('node_modules/react-router') ||
+              id.includes('node_modules/@react-three') ||
+              id.includes('node_modules/scheduler')) {
             return 'react-vendor';
           }
           
-          // Three.js ecosystem
-          if (id.includes('node_modules/three') || 
-              id.includes('node_modules/@react-three')) {
+          // Three.js core (separate from React bindings)
+          if (id.includes('node_modules/three')) {
             return 'three-vendor';
           }
           
