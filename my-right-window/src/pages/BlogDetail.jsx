@@ -3,6 +3,9 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useBlogStore } from '../store';
 import PDFViewer from '../components/blog/PDFViewer';
 import ImageGallery from '../components/blog/ImageGallery';
+import LikeButton from '../components/blog/LikeButton';
+import CommentSection from '../components/blog/CommentSection';
+import ShareButtons from '../components/blog/ShareButtons';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -159,30 +162,30 @@ const BlogDetail = () => {
             </div>
           )}
 
-          {/* Footer - Share and Navigation */}
-          <footer className="pt-8 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              {/* Share buttons */}
+          {/* Engagement Section - Like, Share */}
+          <div className="mb-8 py-6 border-y border-gray-200 animate-slideUp" style={{ animationDelay: '0.4s' }}>
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <span className="text-gray-500 font-medium">Share this article:</span>
-                <button
-                  onClick={() => {
-                    const url = window.location.href;
-                    navigator.clipboard.writeText(url);
-                    alert('Link copied to clipboard!');
-                  }}
-                  className="w-10 h-10 bg-navy/5 hover:bg-navy/10 border border-navy/10 text-navy rounded-full flex items-center justify-center transition-all"
-                  aria-label="Copy link"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                </button>
+                <LikeButton blogId={currentBlog.id} />
+                <ShareButtons title={currentBlog.title} />
               </div>
-
-              {/* Back button */}
               <Link to="/blogs" className="btn-secondary">
                 View All Insights
+              </Link>
+            </div>
+          </div>
+
+          {/* Comments Section */}
+          <div className="animate-slideUp" style={{ animationDelay: '0.5s' }}>
+            <CommentSection blogId={currentBlog.id} />
+          </div>
+
+          {/* Footer Navigation */}
+          <footer className="pt-8 mt-8 border-t border-gray-200">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+              {/* Back button */}
+              <Link to="/blogs" className="btn-primary">
+                ← Back to All Insights
               </Link>
             </div>
           </footer>

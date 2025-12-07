@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import UserAuthButton from '../common/UserAuthButton';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,6 +66,7 @@ export default function Navbar() {
                 }`}></span>
               </Link>
             ))}
+            <UserAuthButton />
             <Link to="/blogs" className="btn-primary text-sm px-5 py-2.5">
               Get Started
             </Link>
@@ -112,7 +114,8 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4">
+            <div className="pt-4 space-y-3">
+              <UserAuthButton />
               <Link 
                 to="/blogs" 
                 onClick={() => setIsMobileMenuOpen(false)}
