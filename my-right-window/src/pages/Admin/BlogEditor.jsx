@@ -182,17 +182,20 @@ export default function BlogEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="bg-slate-900 border-b border-slate-800">
+      <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-neon-green">
-              {id ? 'Edit Blog Post' : 'Create New Blog Post'}
-            </h1>
+            <div>
+              <h1 className="text-2xl font-serif font-bold text-navy">
+                {id ? 'Edit Article' : 'Create New Article'}
+              </h1>
+              <p className="text-gray-500 text-sm mt-1">Law Veritas Admin</p>
+            </div>
             <button
               onClick={() => navigate('/admin/dashboard')}
-              className="px-4 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-slate-800 transition-colors"
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
             </button>
@@ -202,162 +205,182 @@ export default function BlogEditor() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
-              Title *
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neon-green transition-colors"
-              placeholder="Enter blog title"
-            />
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            {/* Title */}
+            <div className="mb-6">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+                Title *
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
+                placeholder="Enter article title"
+              />
+            </div>
+
+            {/* Author */}
+            <div className="mb-6">
+              <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-2">
+                Author *
+              </label>
+              <input
+                type="text"
+                id="author"
+                name="author"
+                value={formData.author}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
+                placeholder="Author name"
+              />
+            </div>
+
+            {/* Content */}
+            <div className="mb-6">
+              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+                Content *
+              </label>
+              <textarea
+                id="content"
+                name="content"
+                value={formData.content}
+                onChange={handleInputChange}
+                required
+                rows={15}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors resize-y"
+                placeholder="Write your article content here... (supports markdown)"
+              />
+            </div>
+
+            {/* Tags */}
+            <div>
+              <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-2">
+                Tags (comma-separated)
+              </label>
+              <input
+                type="text"
+                id="tags"
+                name="tags"
+                value={formData.tags}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
+                placeholder="legal, corporate, compliance"
+              />
+            </div>
           </div>
 
-          {/* Author */}
-          <div>
-            <label htmlFor="author" className="block text-sm font-medium text-gray-300 mb-2">
-              Author *
-            </label>
-            <input
-              type="text"
-              id="author"
-              name="author"
-              value={formData.author}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neon-green transition-colors"
-              placeholder="Author name"
-            />
-          </div>
+          {/* Media Section */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Media</h3>
+            
+            {/* Images */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Images
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-navy file:text-white file:font-medium hover:file:bg-navy-dark cursor-pointer"
+              />
+              {images.length > 0 && (
+                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {images.map((img, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={img.url}
+                        alt={img.alt}
+                        className="w-full h-32 object-cover rounded-xl border border-gray-200"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(index)}
+                        className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          {/* Content */}
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium text-gray-300 mb-2">
-              Content *
-            </label>
-            <textarea
-              id="content"
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
-              required
-              rows={15}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neon-green transition-colors resize-y"
-              placeholder="Write your blog content here... (supports markdown)"
-            />
-          </div>
-
-          {/* Tags */}
-          <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-gray-300 mb-2">
-              Tags (comma-separated)
-            </label>
-            <input
-              type="text"
-              id="tags"
-              name="tags"
-              value={formData.tags}
-              onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-neon-green transition-colors"
-              placeholder="technology, web, design"
-            />
-          </div>
-
-          {/* Images */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Images
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              disabled={uploading}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-neon-green file:text-black file:font-semibold hover:file:opacity-90"
-            />
-            {images.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-                {images.map((img, index) => (
-                  <div key={index} className="relative group">
-                    <img
-                      src={img.url}
-                      alt={img.alt}
-                      className="w-full h-32 object-cover rounded-lg"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      ✕
-                    </button>
+            {/* PDF */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                PDF Document
+              </label>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handlePdfUpload}
+                disabled={uploading}
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-gold file:text-white file:font-medium hover:file:bg-gold-dark cursor-pointer"
+              />
+              {pdf && (
+                <div className="mt-3 flex items-center justify-between p-4 bg-slate-50 border border-gray-200 rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
+                      <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{pdf.name}</span>
                   </div>
-                ))}
-              </div>
-            )}
+                  <button
+                    type="button"
+                    onClick={() => setPdf(null)}
+                    className="text-red-600 hover:text-red-700 font-medium text-sm"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* PDF */}
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              PDF Document
-            </label>
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={handlePdfUpload}
-              disabled={uploading}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-cyan file:text-black file:font-semibold hover:file:opacity-90"
-            />
-            {pdf && (
-              <div className="mt-2 flex items-center justify-between p-3 bg-slate-800 rounded-lg">
-                <span className="text-sm text-gray-300">{pdf.name}</span>
-                <button
-                  type="button"
-                  onClick={() => setPdf(null)}
-                  className="text-red-500 hover:text-red-400"
-                >
-                  Remove
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Published */}
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="published"
-              name="published"
-              checked={formData.published}
-              onChange={handleInputChange}
-              className="w-5 h-5 bg-slate-900 border-slate-700 rounded focus:ring-neon-green"
-            />
-            <label htmlFor="published" className="ml-3 text-sm font-medium text-gray-300">
-              Publish immediately
-            </label>
+          {/* Publishing Options */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Publishing</h3>
+            
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="published"
+                name="published"
+                checked={formData.published}
+                onChange={handleInputChange}
+                className="w-5 h-5 text-navy border-gray-300 rounded focus:ring-navy"
+              />
+              <label htmlFor="published" className="ml-3 text-sm font-medium text-gray-700">
+                Publish immediately
+              </label>
+            </div>
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex gap-4 pt-2">
             <button
               type="submit"
               disabled={loading || uploading}
-              className="flex-1 bg-neon-green text-black font-bold py-3 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-navy text-white font-semibold py-3.5 rounded-xl hover:bg-navy-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-elegant"
             >
-              {loading ? 'Saving...' : (id ? 'Update Post' : 'Create Post')}
+              {loading ? 'Saving...' : (id ? 'Update Article' : 'Create Article')}
             </button>
             <button
               type="button"
               onClick={() => navigate('/admin/dashboard')}
-              className="px-8 py-3 border border-gray-600 text-gray-300 rounded-lg hover:bg-slate-800 transition-colors"
+              className="px-8 py-3.5 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
             </button>

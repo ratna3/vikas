@@ -204,25 +204,29 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="bg-slate-900 border-b border-slate-800">
+      <header className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-              <p className="text-gray-400 text-sm mt-1">Manage your blog posts</p>
+              <h1 className="text-2xl font-serif font-bold text-navy">Law Veritas Admin</h1>
+              <p className="text-gray-500 text-sm mt-1">Manage your articles and content</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors border border-slate-700"
+                className="px-4 py-2 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-colors border border-gray-200 font-medium flex items-center gap-2"
               >
-                ⚙️ Settings
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Settings
               </button>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                className="px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors border border-red-200 font-medium"
               >
                 Logout
               </button>
@@ -234,48 +238,55 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Settings Panel */}
         {showSettings && (
-          <div className="mb-8 bg-slate-900 border border-slate-800 rounded-lg p-6">
-            <h2 className="text-xl font-bold text-white mb-4">Account Settings</h2>
+          <div className="mb-8 bg-white border border-gray-200 rounded-2xl p-6 shadow-elegant">
+            <h2 className="text-xl font-serif font-bold text-gray-900 mb-6">Account Settings</h2>
             
             {settingsMessage && (
-              <div className={`mb-4 px-4 py-3 rounded-lg ${
+              <div className={`mb-4 px-4 py-3 rounded-xl flex items-center gap-2 ${
                 settingsMessage.includes('Error') 
-                  ? 'bg-red-500/10 border border-red-500 text-red-500'
-                  : 'bg-green-500/10 border border-green-500 text-green-500'
+                  ? 'bg-red-50 border border-red-200 text-red-700'
+                  : 'bg-green-50 border border-green-200 text-green-700'
               }`}>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  {settingsMessage.includes('Error') ? (
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  ) : (
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  )}
+                </svg>
                 {settingsMessage}
               </div>
             )}
 
-            <form onSubmit={handleUpdateSettings} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form onSubmit={handleUpdateSettings} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email (Read-only)
                   </label>
                   <input
                     type="email"
                     value={user?.email || ''}
                     disabled
-                    className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-400 cursor-not-allowed"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Full Name
                   </label>
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
                     placeholder="Enter your full name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     New Password (optional)
                   </label>
                   <input
@@ -288,13 +299,13 @@ export default function AdminDashboard() {
                     autoCorrect="off"
                     autoCapitalize="off"
                     spellCheck="false"
-                    className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
                     placeholder="Enter new password"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Confirm New Password
                   </label>
                   <input
@@ -307,7 +318,7 @@ export default function AdminDashboard() {
                     autoCorrect="off"
                     autoCapitalize="off"
                     spellCheck="false"
-                    className="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-neon-green transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors"
                     placeholder="Confirm new password"
                   />
                 </div>
@@ -316,7 +327,7 @@ export default function AdminDashboard() {
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-2 bg-neon-green text-black font-bold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                className="px-6 py-3 bg-navy text-white font-semibold rounded-xl hover:bg-navy-dark transition-colors disabled:opacity-50 shadow-elegant"
               >
                 {loading ? 'Updating...' : 'Update Settings'}
               </button>
@@ -326,21 +337,48 @@ export default function AdminDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-6">
-            <h3 className="text-gray-400 text-sm font-medium mb-2">Total Posts</h3>
-            <p className="text-3xl font-bold text-white">{blogs.length}</p>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-navy/10 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-gray-500 text-sm font-medium">Total Articles</h3>
+                <p className="text-3xl font-bold text-gray-900">{blogs.length}</p>
+              </div>
+            </div>
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-6">
-            <h3 className="text-gray-400 text-sm font-medium mb-2">Published</h3>
-            <p className="text-3xl font-bold text-neon-green">
-              {blogs.filter(b => b.published).length}
-            </p>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-gray-500 text-sm font-medium">Published</h3>
+                <p className="text-3xl font-bold text-green-600">
+                  {blogs.filter(b => b.published).length}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-6">
-            <h3 className="text-gray-400 text-sm font-medium mb-2">Drafts</h3>
-            <p className="text-3xl font-bold text-yellow-500">
-              {blogs.filter(b => !b.published).length}
-            </p>
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-card">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gold/10 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-gray-500 text-sm font-medium">Drafts</h3>
+                <p className="text-3xl font-bold text-gold">
+                  {blogs.filter(b => !b.published).length}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -348,78 +386,89 @@ export default function AdminDashboard() {
         <div className="mb-6">
           <button
             onClick={() => navigate('/admin/editor')}
-            className="px-6 py-3 bg-neon-green text-black font-bold rounded-lg hover:opacity-90 transition-opacity"
+            className="px-6 py-3 bg-navy text-white font-semibold rounded-xl hover:bg-navy-dark transition-colors shadow-elegant flex items-center gap-2"
           >
-            ➕ Create New Blog Post
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create New Article
           </button>
         </div>
 
         {/* Blogs Table */}
-        <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-card">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-800 border-b border-slate-700">
+              <thead className="bg-slate-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Title
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Author
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800">
+              <tbody className="divide-y divide-gray-100">
                 {blogs.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-6 py-12 text-center text-gray-500">
-                      No blog posts yet. Create your first one!
+                    <td colSpan="5" className="px-6 py-16 text-center">
+                      <div className="flex flex-col items-center">
+                        <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                          <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <p className="text-gray-500 mb-2">No articles yet</p>
+                        <p className="text-gray-400 text-sm">Create your first article to get started!</p>
+                      </div>
                     </td>
                   </tr>
                 ) : (
                   blogs.map((blog) => (
-                    <tr key={blog.id} className="hover:bg-slate-800/50 transition-colors">
+                    <tr key={blog.id} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4">
-                        <div className="text-white font-medium">{blog.title}</div>
+                        <div className="text-gray-900 font-medium">{blog.title}</div>
                         <div className="text-gray-400 text-sm truncate max-w-xs">
                           {blog.slug}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-gray-300">
+                      <td className="px-6 py-4 text-gray-600">
                         {blog.author}
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           blog.published 
-                            ? 'bg-neon-green/20 text-neon-green'
-                            : 'bg-yellow-500/20 text-yellow-500'
+                            ? 'bg-green-50 text-green-700 border border-green-200'
+                            : 'bg-amber-50 text-amber-700 border border-amber-200'
                         }`}>
                           {blog.published ? 'Published' : 'Draft'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-gray-300 text-sm">
+                      <td className="px-6 py-4 text-gray-500 text-sm">
                         {formatDate(blog.created_at)}
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => navigate(`/admin/editor/${blog.id}`)}
-                            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                            className="px-3 py-1.5 bg-navy/10 text-navy rounded-lg hover:bg-navy/20 transition-colors text-sm font-medium"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => togglePublish(blog)}
                             disabled={loading}
-                            className="px-3 py-1 bg-slate-700 text-white rounded hover:bg-slate-600 transition-colors text-sm disabled:opacity-50"
+                            className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium disabled:opacity-50"
                           >
                             {blog.published ? 'Unpublish' : 'Publish'}
                           </button>
@@ -428,7 +477,7 @@ export default function AdminDashboard() {
                               setBlogToDelete(blog);
                               setShowDeleteModal(true);
                             }}
-                            className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm"
+                            className="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium"
                           >
                             Delete
                           </button>
@@ -445,26 +494,31 @@ export default function AdminDashboard() {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-bold text-white mb-4">Confirm Delete</h3>
-            <p className="text-gray-300 mb-6">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 max-w-md w-full shadow-elegant-lg">
+            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-serif font-bold text-gray-900 mb-2 text-center">Confirm Delete</h3>
+            <p className="text-gray-500 mb-6 text-center">
               Are you sure you want to delete "{blogToDelete?.title}"? This action cannot be undone.
             </p>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-center gap-4">
               <button
                 onClick={() => {
                   setShowDeleteModal(false);
                   setBlogToDelete(null);
                 }}
-                className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors"
+                className="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                className="px-5 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50 font-medium"
               >
                 {loading ? 'Deleting...' : 'Delete'}
               </button>

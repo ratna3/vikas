@@ -48,7 +48,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 text-sm font-semibold text-white bg-charcoal rounded-lg border border-gray-700 hover:border-neon-cyan hover:text-neon-cyan transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-700 disabled:hover:text-white"
+        className="px-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-xl border border-gray-300 hover:border-navy hover:text-navy transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 shadow-sm"
         aria-label="Previous page"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         {getPageNumbers().map((page, index) => {
           if (page === '...') {
             return (
-              <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">
+              <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
                 ...
               </span>
             );
@@ -71,10 +71,10 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-all ${
+              className={`px-4 py-2 text-sm font-semibold rounded-xl border transition-all shadow-sm ${
                 currentPage === page
-                  ? 'bg-neon-green text-deep-black border-neon-green'
-                  : 'text-white bg-charcoal border-gray-700 hover:border-neon-cyan hover:text-neon-cyan'
+                  ? 'bg-navy text-white border-navy'
+                  : 'text-gray-700 bg-white border-gray-300 hover:border-navy hover:text-navy'
               }`}
               aria-label={`Page ${page}`}
               aria-current={currentPage === page ? 'page' : undefined}
@@ -89,7 +89,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 text-sm font-semibold text-white bg-charcoal rounded-lg border border-gray-700 hover:border-neon-cyan hover:text-neon-cyan transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-700 disabled:hover:text-white"
+        className="px-4 py-2 text-sm font-semibold text-gray-700 bg-white rounded-xl border border-gray-300 hover:border-navy hover:text-navy transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 shadow-sm"
         aria-label="Next page"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

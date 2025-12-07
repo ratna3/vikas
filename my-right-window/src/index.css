@@ -1,29 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  /* Custom masculine color palette */
+  /* Law Veritas - Professional Color Palette */
+  --color-navy: #1a365d;
+  --color-navy-dark: #0d1b2a;
+  --color-navy-light: #2c5282;
+  --color-gold: #b8860b;
+  --color-gold-light: #d4a843;
+  --color-gold-dark: #8b6914;
+  --color-charcoal: #374151;
+  --color-slate-dark: #1e293b;
+  --color-cream: #faf9f6;
+  --color-off-white: #f8fafc;
+  --color-warm-gray: #6b7280;
+  
+  /* Legacy compatibility */
   --color-dark-slate: #0f172a;
-  --color-charcoal: #1e293b;
-  --color-neon-green: #00ff41;
-  --color-neon-cyan: #00d9ff;
-  --color-neon-orange: #ff6b35;
-  --color-deep-black: #000000;
-  --color-dark-gray: #111827;
+  --color-neon-green: #1a365d;
+  --color-neon-cyan: #2c5282;
+  --color-neon-orange: #b8860b;
+  --color-deep-black: #0f172a;
+  --color-dark-gray: #1e293b;
   
   /* Animations */
   --animate-float: float 3s ease-in-out infinite;
-  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-fadeIn: fadeIn 0.6s ease-out;
   --animate-slideUp: slideUp 0.5s ease-out;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-10px); }
 }
 
-@keyframes glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -33,10 +45,14 @@
 
 @layer base {
   body {
-    @apply bg-deep-black text-white antialiased;
+    @apply bg-white text-gray-900 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
     margin: 0;
     min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
   }
   
   * {
@@ -46,34 +62,53 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-neon-green text-deep-black px-6 py-3 rounded-lg font-semibold 
-           hover:opacity-90 transition-all duration-300 
-           focus:outline-none focus:ring-2 focus:ring-neon-green;
+    @apply bg-navy text-white px-6 py-3 rounded-lg font-semibold 
+           hover:bg-navy-dark transition-all duration-300 
+           focus:outline-none focus:ring-2 focus:ring-gold shadow-elegant;
   }
   
   .btn-secondary {
-    @apply bg-transparent border-2 border-neon-cyan text-neon-cyan px-6 py-3 rounded-lg font-semibold 
-           hover:bg-neon-cyan hover:text-deep-black transition-all duration-300
-           focus:outline-none focus:ring-2 focus:ring-neon-cyan;
+    @apply bg-transparent border-2 border-navy text-navy px-6 py-3 rounded-lg font-semibold 
+           hover:bg-navy hover:text-white transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-navy;
+  }
+  
+  .btn-gold {
+    @apply bg-gold text-white px-6 py-3 rounded-lg font-semibold 
+           hover:bg-gold-dark transition-all duration-300 
+           focus:outline-none focus:ring-2 focus:ring-gold-light shadow-elegant;
   }
   
   .card {
-    @apply bg-charcoal border border-gray-700 rounded-lg p-6 shadow-lg
-           hover:border-neon-cyan transition-all duration-300;
+    @apply bg-white border border-gray-200 rounded-xl p-6 shadow-card
+           hover:shadow-card-hover transition-all duration-300;
+  }
+  
+  .card-elevated {
+    @apply bg-white rounded-xl p-8 shadow-elegant-lg
+           hover:shadow-2xl transition-all duration-300;
   }
   
   .input-field {
-    @apply bg-dark-slate border border-gray-600 text-white px-4 py-2 rounded-lg
-           focus:outline-none focus:ring-2 focus:ring-neon-green focus:border-transparent
+    @apply bg-white border border-gray-300 text-gray-900 px-4 py-3 rounded-lg
+           focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent
            placeholder:text-gray-400;
   }
   
-  .text-glow {
-    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  .section-title {
+    @apply text-4xl md:text-5xl font-serif font-bold text-navy mb-4;
   }
   
-  .box-glow {
-    box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+  .section-subtitle {
+    @apply text-lg text-gray-600 max-w-2xl mx-auto;
+  }
+  
+  .text-accent {
+    @apply text-gold font-semibold;
+  }
+  
+  .divider-gold {
+    @apply w-24 h-1 bg-gold mx-auto my-6 rounded-full;
   }
 }
 
@@ -88,5 +123,21 @@
   
   .backface-hidden {
     backface-visibility: hidden;
+  }
+  
+  .shadow-elegant {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-elegant-lg {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  }
+  
+  .shadow-card {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .shadow-card-hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   }
 }

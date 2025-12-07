@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function SearchBar({ onSearch, placeholder = 'Search blogs...' }) {
+export default function SearchBar({ onSearch, placeholder = 'Search articles...' }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSubmit = (e) => {
@@ -30,8 +30,8 @@ export default function SearchBar({ onSearch, placeholder = 'Search blogs...' })
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={placeholder}
-          className="input-field pl-12 pr-24 w-full"
-          aria-label="Search blogs"
+          className="w-full pl-12 pr-24 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-navy focus:border-transparent transition-colors shadow-sm"
+          aria-label="Search articles"
         />
 
         {/* Clear button */}
@@ -39,7 +39,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search blogs...' })
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-20 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-neon-cyan transition-colors"
+            className="absolute right-20 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-navy transition-colors"
             aria-label="Clear search"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search blogs...' })
         {/* Search button */}
         <button
           type="submit"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1.5 bg-neon-green text-deep-black font-semibold rounded-lg hover:opacity-90 transition-all"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1.5 bg-navy text-white font-semibold rounded-lg hover:bg-navy-dark transition-all"
           aria-label="Search"
         >
           Search
