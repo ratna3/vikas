@@ -1,7 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
+  "buildCommand": "cd my-right-window && npm install && npm run build",
+  "outputDirectory": "my-right-window/dist",
   "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
