@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { supabase, isSupabaseConfigured } from '../services/supabase';
-import { getMockBlogs, getMockBlogBySlug } from '../data/mockBlogs';
+import { getMockBlogs, getMockBlogBySlug, getMockFeaturedBlogs } from '../data/mockBlogs';
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -60,14 +60,41 @@ export const useAuthStore = create((set) => ({
 
 export const useBlogStore = create((set, get) => ({
   blogs: [],
+  featuredBlogs: [],
   currentBlog: null,
   isLoading: false,
   error: null,
 
   setBlogs: (blogs) => set({ blogs }),
+  setFeaturedBlogs: (featuredBlogs) => set({ featuredBlogs }),
   setCurrentBlog: (blog) => set({ currentBlog: blog }),
   setLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
+
+  fetchFeaturedBlogs: async () => {
+    try {
+      // Use mock data if Supabase is not configured
+      if (!isSupabaseConfigured()) {
+        const mockData = await getMockFeaturedBlogs();
+        set({ featuredBlogs: mockData });
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('published', true)
+        .eq('featured', true)
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (error) throw error;
+      set({ featuredBlogs: data || [] });
+    } catch (error) {
+      console.error('Error fetching featured blogs:', error.message);
+      set({ featuredBlogs: [] });
+    }
+  },
 
   fetchBlogs: async (published = true) => {
     set({ isLoading: true, error: null });

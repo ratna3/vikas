@@ -1,9 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ModelScene from '../components/3d/ModelScene';
+import { useBlogStore } from '../store';
 
 const Home = () => {
   const heroRef = useRef(null);
+  const { featuredBlogs, fetchFeaturedBlogs } = useBlogStore();
+
+  useEffect(() => {
+    fetchFeaturedBlogs();
+  }, [fetchFeaturedBlogs]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -180,28 +186,66 @@ const Home = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="card group hover:border-gold/30 transition-all duration-300">
-                <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
-                  <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
+            {featuredBlogs.length > 0 ? (
+              featuredBlogs.map((blog) => (
+                <div key={blog.id} className="card group hover:border-gold/30 transition-all duration-300">
+                  <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                    {blog.images && blog.images.length > 0 ? (
+                      <img 
+                        src={blog.images[0]} 
+                        alt={blog.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 mb-3 flex-wrap">
+                    {blog.tags && blog.tags.slice(0, 2).map((tag, idx) => (
+                      <span key={idx} className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors line-clamp-2">
+                    {blog.title}
+                  </h3>
+                  <p className="text-gray-500 mb-6 leading-relaxed line-clamp-3">
+                    {blog.content.substring(0, 150).replace(/[#*`]/g, '')}...
+                  </p>
+                  <Link to={`/blog/${blog.slug}`} className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
+                    Read Article
+                    <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">Legal Insight</span>
+              ))
+            ) : (
+              // Fallback placeholder cards when no featured blogs
+              [1, 2, 3].map((item) => (
+                <div key={item} className="card group hover:border-gold/30 transition-all duration-300">
+                  <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-50 rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                    <div className="text-6xl text-navy/20 group-hover:scale-110 transition-transform duration-500">⚖️</div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="px-3 py-1 text-xs font-semibold text-gold bg-gold/10 rounded-full">Legal Insight</span>
+                  </div>
+                  <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors">
+                    Coming Soon
+                  </h3>
+                  <p className="text-gray-500 mb-6 leading-relaxed">
+                    Featured articles will appear here. Check back soon for legal insights and analysis.
+                  </p>
+                  <Link to="/blogs" className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
+                    View All Articles
+                    <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </div>
-                <h3 className="text-xl font-serif font-bold text-gray-900 mb-3 group-hover:text-navy transition-colors">
-                  Sample Article Title {item}
-                </h3>
-                <p className="text-gray-500 mb-6 leading-relaxed">
-                  A glimpse into the evolving landscape of legal practice. Discover insights that shape the future of law.
-                </p>
-                <Link to={`/blog/sample-${item}`} className="inline-flex items-center text-navy font-semibold hover:text-gold transition-colors group/link">
-                  Read Article
-                  <svg className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>

@@ -73,6 +73,7 @@ Whether you're a developer, architect, or business leader, now is the time to ex
     ],
     pdf_url: null,
     pdf_name: null,
+    featured: true,
   },
   {
     id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
@@ -139,6 +140,7 @@ Understanding Trpple Tllaq's architecture is key to leveraging its full potentia
     ],
     pdf_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
     pdf_name: 'Trpple-Tllaq-Architecture-Guide.pdf',
+    featured: true,
   },
   {
     id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
@@ -193,6 +195,7 @@ For enterprises considering Trpple Tllaq, the evidence is clear: this technology
     ],
     pdf_url: null,
     pdf_name: null,
+    featured: true,
   },
   {
     id: '4d5e6f7g-8h9i-0j1k-2l3m-4n5o6p7q8r9s',
@@ -303,6 +306,7 @@ The judgment reminds us that the Constitution is a living document that must evo
     ],
     pdf_url: null,
     pdf_name: null,
+    featured: false,
   },
 ];
 
@@ -315,6 +319,15 @@ export const getMockBlogs = (published = true) => {
         : mockBlogs;
       resolve(filteredBlogs);
     }, 500); // Simulate network delay
+  });
+};
+
+export const getMockFeaturedBlogs = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const featuredBlogs = mockBlogs.filter(blog => blog.published && blog.featured).slice(0, 3);
+      resolve(featuredBlogs);
+    }, 300); // Simulate network delay
   });
 };
 
